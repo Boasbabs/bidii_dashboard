@@ -32,7 +32,7 @@ const ProductListTable = ({productList}) => (
                         </Table.Cell>
                         <Table.Cell>{product.attributes.name}</Table.Cell>
                         <Table.Cell>{product.attributes.code}</Table.Cell>
-                        <Table.Cell>{product.attributes.unit_price}</Table.Cell>
+                        <Table.Cell>{product.attributes.unit_price} GHS</Table.Cell>
                         <Table.Cell>{product.attributes.manufacturer}</Table.Cell>
                         <Table.Cell>{product.attributes.uom}</Table.Cell>
                         <Table.Cell>{product.attributes.category}</Table.Cell>
