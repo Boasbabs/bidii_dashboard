@@ -14,6 +14,60 @@ const sections = [
     { key: 'reports', name: 'Reports' },
 ]
 
+const productList = [
+    {
+        "id": "1",
+        "type": "product",
+        "attributes": {
+            "name": "Product 1",
+            "code": "P1000",
+            "image": "https://res.cloudinary.com/bidiibuildcpm/image/upload/v1533145679/9_lznoma.png",
+            "unit_price": "25.64",
+            "manufacturer": "Adidas",
+            "uom": "pieces",
+            "category": "general",
+            "reorder_level": 10,
+            "is_active": true,
+            "created_at": "2018-08-01T22:20:15.829Z",
+            "updated_at": "2018-08-01T22:20:15.829Z"
+        }
+    },
+    {
+        "id": "2",
+        "type": "product",
+        "attributes": {
+            "name": "Product 2",
+            "code": "P1001",
+            "image": "https://res.cloudinary.com/bidiibuildcpm/image/upload/v1533145679/10_yvsxog.png",
+            "unit_price": "100.64",
+            "manufacturer": "Adidas",
+            "uom": "pieces",
+            "category": "general",
+            "reorder_level": 20,
+            "is_active": true,
+            "created_at": "2018-08-01T22:20:15.844Z",
+            "updated_at": "2018-08-01T22:20:15.844Z"
+        }
+    },
+    {
+        "id": "3",
+        "type": "product",
+        "attributes": {
+            "name": "Product 3",
+            "code": "P1002",
+            "image": "https://res.cloudinary.com/bidiibuildcpm/image/upload/v1533145679/8_eueyoa.png",
+            "unit_price": "200.64",
+            "manufacturer": "Adidas",
+            "uom": null,
+            "category": "general",
+            "reorder_level": 5,
+            "is_active": true,
+            "created_at": "2018-08-01T22:20:15.851Z",
+            "updated_at": "2018-08-01T22:20:15.851Z"
+        }
+    },
+]
+
 const TopMenu = () => (
     <Menu className='primary-color-bg m-0 border-0' size='massive' borderless inverted color={'grey'}>
         <Menu.Item>Bidii Dashboard</Menu.Item>
@@ -21,6 +75,7 @@ const TopMenu = () => (
 )
 
 const SecondaryMenu = () => <Menu className='border-0 m-0' size='' position='right' items={sections} borderless/>
+
 
 class PrimaryMenu extends Component {
     state = {}
@@ -64,13 +119,11 @@ class PrimaryMenu extends Component {
     }
 }
 
-const CheckboxElement = () => (
-    <Checkbox label='' />
-)
+
+const CheckboxElement = () => <Checkbox label='' />
 
 
-
-const ProductListTable = () => (
+const ProductListTable = ({productList}) => (
     <Table singleLine striped className='m-0'>
         <Table.Header>
             <Table.Row>
@@ -89,38 +142,46 @@ const ProductListTable = () => (
         </Table.Header>
 
         <Table.Body>
-            <Table.Row className='pt-1 pb-1'>
-                <Table.Cell>
-                    <CheckboxElement/>
-                </Table.Cell>
-                <Table.Cell>Cement</Table.Cell>
-                <Table.Cell>PRO-0001</Table.Cell>
-                <Table.Cell>GHC 24.50</Table.Cell>
-                <Table.Cell>GHACEM</Table.Cell>
-                <Table.Cell>Bags</Table.Cell>
-                <Table.Cell>Interior Design</Table.Cell>
-                <Table.Cell textAlign={'center'}>5</Table.Cell>
-                <Table.Cell>
-                    <Button className='secondary-color-bg white-color'>Active</Button>
-                </Table.Cell>
-            </Table.Row>
+            {productList.map(product => {
+                return(
+                    <Table.Row className='pt-1 pb-1' key={product.id}>
+                        <Table.Cell>
+                            <CheckboxElement/>
+                        </Table.Cell>
+                        <Table.Cell>{product.attributes.name}</Table.Cell>
+                        <Table.Cell>{product.attributes.code}</Table.Cell>
+                        <Table.Cell>{product.attributes.unit_price}</Table.Cell>
+                        <Table.Cell>{product.attributes.manufacturer}</Table.Cell>
+                        <Table.Cell>{product.attributes.uom}</Table.Cell>
+                        <Table.Cell>{product.attributes.category}</Table.Cell>
+                        <Table.Cell textAlign={'center'}>{product.attributes.reorder_level}</Table.Cell>
+                        <Table.Cell>
+                            <Button className='secondary-color-bg white-color'>Active</Button>
+                        </Table.Cell>
+                    </Table.Row>
+                )
+            })}
         </Table.Body>
     </Table>
 )
 
 
-
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <TopMenu />
-          <SecondaryMenu/>
-          <PrimaryMenu/>
-          <ProductListTable/>
-      </div>
-    );
-  }
+
+    state = {
+        productList: productList,
+    };
+
+    render() {
+        return (
+            <div className="App">
+                <TopMenu />
+                <SecondaryMenu/>
+                <PrimaryMenu/>
+                <ProductListTable productList={productList}/>
+            </div>
+        );
+    }
 }
 
 export default App;
