@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { Button, Dropdown, Input, Icon, Menu} from 'semantic-ui-react';
 
-
+// Component that contains the menu
 class PrimaryMenu extends Component {
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
@@ -26,6 +26,7 @@ class PrimaryMenu extends Component {
                                icon='search'
                                placeholder='Search...'
                                name="search"
+                               type="text"
                                onChange={onSearch} />
                     </Menu.Item>
 

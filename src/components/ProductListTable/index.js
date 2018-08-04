@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button, Checkbox, Table } from 'semantic-ui-react';
 
-
+// checkbox for each product
 const CheckboxElement = () => <Checkbox label='' />
 
-
+// component for the Rows of Product display on Table
 const ProductListTable = ({productList}) => (
     <Table singleLine striped className='m-0'>
         <Table.Header>
@@ -22,7 +22,7 @@ const ProductListTable = ({productList}) => (
                 <Table.HeaderCell>Active</Table.HeaderCell>
             </Table.Row>
         </Table.Header>
-
+        {/*// iterate over the Product List Data from API*/}
         <Table.Body>
             {productList.map(product => {
                 return(
