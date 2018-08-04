@@ -8,43 +8,73 @@ import TopMenu from './components/TopMenu';
 import SecondaryMenu from './components/SecondaryMenu';
 import PrimaryMenu from './components/PrimaryMenu';
 import LoadingContent from './components/LoadingContent';
+import {PATH_PRODUCT, PATH_BASE} from './constants'
 
 
-const PATH_BASE = 'https://bidiibuild-test-api.herokuapp.com/api/v1/';
-const PATH_PRODUCT = 'products';
-
+// const isSearched = (searchTerm) => (item) => item.name.toLowerCase().includes(searchTerm.toLowerCase())
+function filterProduct(searchTerm) {
+    return function(item) {
+        return item.attributes.manufacturer.toLowerCase().includes(searchTerm.toLowerCase());
+    }
+}
 
 class App extends Component {
 
     state = {
         productList: [],
-        loading: false,
+        loadingMessage: false,
+        searchTerm: '',
+        result:[],
     };
 
     //  to fetch data from an API
     fetchProductList(){
         axios(`${PATH_BASE}${PATH_PRODUCT}`)
             .then(result => {
-                this.setState({productList:result.data.data, loading: false})
+                this.setState({productList:result.data.data, loadingMessage: false})
             })
             .catch(error => error)
     }
 
     //when the component mounted, do an asynchronous request
     componentDidMount(){
-        this.setState({loading: true})
+        this.setState({loadingMessage: true})
         this.fetchProductList()
     }
 
+    onSearchChange = ({target}) => {
+        const {productList} = this.state
+        this.setState({ searchTerm: target.value  })
+
+        /*const filterProduct = this.state.productList.filter( prod => {
+            prod.attributes.manufacturer.toLowerCase().includes(this.state.searchTerm.toLowerCase())
+            console.log(prod.attributes.manufacturer.toLowerCase().includes(this.state.searchTerm.toLowerCase()))
+        });*/
+        const searchResult = productList.filter(filterProduct(this.state.searchTerm));
+        console.log("search result is ----------");
+        console.log(searchResult);
+        this.fetchProductList();
+        this.setState({productList: searchResult})
+    };
+
+    // onSearch = ({event}) => {
+    //     const {searchTerm, productList} = this.state;
+    //     this.state.productList.filter(filterProduct(this.state.searchTerm));
+    //     this.setState({productList: [...productList]})
+    // }
+
+
     render() {
-        const {productList, loading} = this.state;
+        // destructure the states
+        const {productList, loadingMessage, searchTerm} = this.state;
+        console.log(searchTerm);
 
         return (
             <div className="App">
                 <TopMenu />
                 <SecondaryMenu />
-                <PrimaryMenu/>
-                { loading ?
+                <PrimaryMenu onSearch={this.onSearchChange}/>
+                { loadingMessage ?
                     <LoadingContent/>
                     : <ProductListTable productList={productList}/>
                 }

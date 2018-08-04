@@ -3,12 +3,11 @@ import { Button, Dropdown, Input, Icon, Menu} from 'semantic-ui-react';
 
 
 class PrimaryMenu extends Component {
-    state = {}
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name })
 
     render() {
-
+        const { onSearch } = this.props
         return (
             <Menu className='large m-0 border-0' borderless>
                 <Dropdown text='Active Products' pointing className='link item'>
@@ -17,13 +16,17 @@ class PrimaryMenu extends Component {
                         <Dropdown.Item>All Products</Dropdown.Item>
                         <Dropdown.Item>Active Products</Dropdown.Item>
                         <Dropdown.Item>Inactive Products</Dropdown.Item>
-                        <Dropdown.Item>Unicategorized Products</Dropdown.Item>
+                        <Dropdown.Item>Uncategorized Products</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
 
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Input className='icon' icon='search' placeholder='Search...' />
+                        <Input className='icon'
+                               icon='search'
+                               placeholder='Search...'
+                               name="search"
+                               onChange={onSearch} />
                     </Menu.Item>
 
                     <Menu.Item>
